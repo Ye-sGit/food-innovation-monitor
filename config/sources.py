@@ -26,6 +26,11 @@ SOURCES = {
             "food tech AI digital innovation",
             # 融资并购
             "food startup funding acquisition IPO",
+            # 从媒体名单补充 — 细分赛道
+            "dairy innovation new product",
+            "beverage innovation coffee tea",
+            "functional food nutrition health",
+            "food ingredient innovation clean label",
         ],
     },
     "google_news_cn": {
@@ -103,7 +108,62 @@ SOURCES = {
     },
 
     # ══════════════════════════════════════════════════════════
-    # 中文行业媒体 — 网页采集（无公开 RSS）
+    # 国际媒体 — 从媒体名单补充（食品细分赛道）
+    # ══════════════════════════════════════════════════════════
+    "foodbev": {
+        "type": "rss",
+        "url": "https://www.foodbev.com/feed/",
+        "name": "FoodBev Media",
+        "language": "en",
+        "authority_level": "S",
+        "authority_score": 10,
+    },
+    "dairy_reporter": {
+        "type": "rss",
+        "url": "https://www.dairyreporter.com/Info/RSS",
+        "name": "Dairy Reporter",
+        "language": "en",
+        "authority_level": "S",
+        "authority_score": 10,
+    },
+    "nutrition_insight": {
+        "type": "rss",
+        "url": "https://www.nutritioninsight.com/Info/RSS",
+        "name": "Nutrition Insight",
+        "language": "en",
+        "authority_level": "S",
+        "authority_score": 10,
+    },
+    "green_queen": {
+        "type": "rss",
+        "url": "https://www.greenqueen.com.hk/feed/",
+        "name": "Green Queen",
+        "language": "en",
+        "authority_level": "A",
+        "authority_score": 9,
+        "enabled": False,  # 植物基/可持续专项，按需开启
+    },
+    "vegconomist": {
+        "type": "rss",
+        "url": "https://vegconomist.com/feed/",
+        "name": "Vegconomist",
+        "language": "en",
+        "authority_level": "A",
+        "authority_score": 9,
+        "enabled": False,  # 纯素商业，按需开启
+    },
+    "the_spoon": {
+        "type": "rss",
+        "url": "https://thespoon.tech/feed/",
+        "name": "The Spoon",
+        "language": "en",
+        "authority_level": "A",
+        "authority_score": 9,
+        "enabled": False,  # 食品科技专项
+    },
+
+    # ══════════════════════════════════════════════════════════
+    # 中文行业媒体 — 网页采集（从媒体名单补充）
     # ══════════════════════════════════════════════════════════
     "foodtalks": {
         "type": "web",
@@ -148,6 +208,18 @@ SOURCES = {
         "article_selector": "article, div.post-item",
         "title_selector": "h2 a, h3 a, a.title",
         "link_selector": "h2 a, h3 a, a.title",
+    },
+    "36kr_food": {
+        "type": "web",
+        "url": "https://36kr.com/newsflashes",
+        "name": "36氪快讯",
+        "language": "zh",
+        "authority_level": "B",
+        "authority_score": 8,
+        "article_selector": "div.newsflash-item, div.item-desc",
+        "title_selector": "a.item-title, span.title",
+        "link_selector": "a",
+        "enabled": False,  # 需要验证 CSS selector
     },
 
     # ══════════════════════════════════════════════════════════
