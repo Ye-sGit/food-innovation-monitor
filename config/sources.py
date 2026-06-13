@@ -223,17 +223,24 @@ SOURCES = {
         "title_selector": "h2 a, h3 a, a.title",
         "link_selector": "h2 a, h3 a, a.title",
     },
-    "36kr_food": {
-        "type": "web",
-        "url": "https://36kr.com/newsflashes",
-        "name": "36氪快讯",
+    # ══════════════════════════════════════════════════════════
+    # 中国本土媒体 RSS（已验证可用）
+    # ══════════════════════════════════════════════════════════
+    "36kr": {
+        "type": "rss",
+        "url": "https://36kr.com/feed",
+        "name": "36氪",
         "language": "zh",
         "authority_level": "B",
         "authority_score": 8,
-        "article_selector": "div.newsflash-item, div.item-desc",
-        "title_selector": "a.item-title, span.title",
-        "link_selector": "a",
-        "enabled": False,  # 需要验证 CSS selector
+    },
+    "jiemian": {
+        "type": "rss",
+        "url": "https://a.jiemian.com/index.php?m=article&a=rss",
+        "name": "界面新闻",
+        "language": "zh",
+        "authority_level": "B",
+        "authority_score": 8,
     },
 
     # ══════════════════════════════════════════════════════════

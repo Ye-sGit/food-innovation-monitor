@@ -219,30 +219,30 @@ def split_top_items(
     """
     将已评分的新闻拆分为「最重要」和「次重要」两组
 
-    最重要 10 条: 中文 5 条 + 英文 5 条（各取 Top 5）
-    次重要 10 条: 剩余的中文 + 剩余的英文，混合排序取 Top 10
+    最重要 10 条: 国内 5 条 + 国外 5 条（各取 Top 5，交叉排列）
+    次重要 10 条: 国内 5 条 + 国外 5 条（各取 6~10 位，交叉排列）
     """
     # 按语言分组
     zh_items = [s for s in scored_items if s.language in ("zh", "zh-CN")]
     en_items = [s for s in scored_items if s.language not in ("zh", "zh-CN")]
 
-    # 最重要: 中文 Top 5 + 英文 Top 5 (交叉排列)
-    zh_top5 = zh_items[:5]
-    en_top5 = en_items[:5]
+    def interleave(a, b, count_a, count_b):
+        """交叉排列两个列表"""
+        result = []
+        max_len = max(count_a, count_b)
+        for i in range(max_len):
+            if i < count_a and i < len(a):
+                result.append(a[i])
+            if i < count_b and i < len(b):
+                result.append(b[i])
+        return result
 
-    top_items = []
-    max_len = max(len(zh_top5), len(en_top5))
-    for i in range(max_len):
-        if i < len(zh_top5):
-            top_items.append(zh_top5[i])
-        if i < len(en_top5):
-            top_items.append(en_top5[i])
+    # 最重要: 中文 Top 5 + 英文 Top 5
+    top_items = interleave(zh_items, en_items, 5, 5)
 
-    remaining_zh = zh_items[5:]
-    remaining_en = en_items[5:]
-    remaining = remaining_zh + remaining_en
-    remaining.sort(key=lambda x: x.total_score, reverse=True)
-
-    secondary_items = remaining[:secondary_n]
+    # 次重要: 中文 6~10 + 英文 6~10
+    zh_secondary = zh_items[5:10]
+    en_secondary = en_items[5:10]
+    secondary_items = interleave(zh_secondary, en_secondary, len(zh_secondary), len(en_secondary))
 
     return top_items, secondary_items

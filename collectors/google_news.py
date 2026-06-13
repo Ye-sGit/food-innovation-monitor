@@ -45,8 +45,8 @@ class GoogleNewsCollector(BaseCollector):
         """构造 Google News RSS 搜索 URL"""
         params = self.default_params.copy()
         if self.language == "zh-CN":
-            # 中文源用 7 天窗口（48h 过滤在评分器做）
-            params["q"] = f"{query} when:7d"
+            # 中文源也用 2 天窗口，确保时效性
+            params["q"] = f"{query} when:2d"
         else:
             # 英文源限定最近 2 天
             params["q"] = f"{query} when:2d"
