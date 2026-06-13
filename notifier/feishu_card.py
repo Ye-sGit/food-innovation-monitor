@@ -200,10 +200,11 @@ def build_daily_card(
             "tag": "lark_md",
             "content": (
                 "🤖 由 **Food Innovation Monitor** 自动生成\n"
-                "⏰ 每日 09:00 定时推送\n"
-                f"📊 评分算法: 信源权威20% + 公司重要15% + "
-                f"创新相关25% + 时效25% + 热度15% | "
-                f"仅推送48小时内热点"
+                "⏰ 每日 09:00 / 11:00 / 14:00 / 17:00 推送\n"
+                "🇨🇳🇺🇸 国内+国外热点各占50%\n"
+                "🎯 优先: 饮料|速食|预制菜|乳品|烘焙|零食\n"
+                "📊 评分: 信源20% + 公司15% + 创新25% + 时效25% + 热度15%\n"
+                "⏱️ 仅推送48h内热点 | 🌐 GitHub Actions 云端运行"
             ),
         },
     })
@@ -216,13 +217,13 @@ def build_daily_card(
                 "tag": "button",
                 "text": {"tag": "plain_text", "content": "🔍 查看数据来源"},
                 "type": "default",
-                "url": "https://github.com/IceLand/food-innovation-monitor/blob/main/README.md",
+                "url": "https://github.com/Ye-sGit/food-innovation-monitor",
             },
             {
                 "tag": "button",
                 "text": {"tag": "plain_text", "content": "📊 评分算法说明"},
                 "type": "default",
-                "url": "https://github.com/IceLand/food-innovation-monitor/blob/main/README.md",
+                "url": "https://github.com/Ye-sGit/food-innovation-monitor",
             },
         ],
     })
