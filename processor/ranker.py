@@ -218,7 +218,31 @@ def split_top_items(
 ) -> Tuple[List[ScoredNewsItem], List[ScoredNewsItem]]:
     """
     将已评分的新闻拆分为「最重要」和「次重要」两组
+
+    最重要 10 条: 中文 5 条 + 英文 5 条（各取 Top 5）
+    次重要 10 条: 剩余的中文 + 剩余的英文，混合排序取 Top 10
     """
-    top_items = scored_items[:top_n]
-    secondary_items = scored_items[top_n:top_n + secondary_n]
+    # 按语言分组
+    zh_items = [s for s in scored_items if s.language in ("zh", "zh-CN")]
+    en_items = [s for s in scored_items if s.language not in ("zh", "zh-CN")]
+
+    # 最重要: 中文 Top 5 + 英文 Top 5 (交叉排列)
+    zh_top5 = zh_items[:5]
+    en_top5 = en_items[:5]
+
+    top_items = []
+    max_len = max(len(zh_top5), len(en_top5))
+    for i in range(max_len):
+        if i < len(zh_top5):
+            top_items.append(zh_top5[i])
+        if i < len(en_top5):
+            top_items.append(en_top5[i])
+
+    remaining_zh = zh_items[5:]
+    remaining_en = en_items[5:]
+    remaining = remaining_zh + remaining_en
+    remaining.sort(key=lambda x: x.total_score, reverse=True)
+
+    secondary_items = remaining[:secondary_n]
+
     return top_items, secondary_items
