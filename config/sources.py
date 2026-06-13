@@ -141,7 +141,6 @@ SOURCES = {
         "language": "en",
         "authority_level": "A",
         "authority_score": 9,
-        "enabled": False,  # 植物基/可持续专项，按需开启
     },
     "vegconomist": {
         "type": "rss",
