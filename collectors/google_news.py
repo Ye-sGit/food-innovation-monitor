@@ -42,10 +42,14 @@ class GoogleNewsCollector(BaseCollector):
             self.default_params = GOOGLE_NEWS_PARAMS.copy()
 
     def _build_url(self, query: str) -> str:
-        """构造 Google News RSS 搜索 URL（限定最近 2 天）"""
+        """构造 Google News RSS 搜索 URL"""
         params = self.default_params.copy()
-        # Google News 搜索运算符: when:2d 限制最近 2 天
-        params["q"] = f"{query} when:2d"
+        if self.language == "zh-CN":
+            # 中文源不限制时间（评分器会硬过滤 48h），确保数量足够
+            params["q"] = query
+        else:
+            # 英文源限定最近 2 天
+            params["q"] = f"{query} when:2d"
         return f"{self.BASE_URL}?{urlencode(params, quote_via=quote)}"
 
     def _fetch_one_query(self, query: str) -> List[RawNewsItem]:
