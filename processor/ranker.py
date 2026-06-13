@@ -13,7 +13,7 @@ from datetime import datetime, timezone, timedelta
 from typing import List, Tuple
 
 from storage.models import RawNewsItem, ScoredNewsItem
-from processor.nlp_utils import classify_innovation, get_top_company
+from processor.nlp_utils import classify_innovation, get_top_company, detect_priority_category
 from config.settings import MAX_ARTICLE_AGE_HOURS
 from utils.logger import get_logger
 
@@ -144,6 +144,9 @@ def score_item(item: RawNewsItem) -> ScoredNewsItem:
     # 因子 5: 热度信号
     buzz_score = 5
 
+    # 因子 6: 优先品类加成
+    category_label, category_boost = detect_priority_category(text)
+
     # 加权总分
     total = (
         authority * WEIGHTS["authority"]
@@ -151,6 +154,7 @@ def score_item(item: RawNewsItem) -> ScoredNewsItem:
         + innovation_score * WEIGHTS["innovation"]
         + recency_score * WEIGHTS["recency"]
         + buzz_score * WEIGHTS["buzz"]
+        + category_boost  # 品类加成（0~1.0）
     )
 
     return ScoredNewsItem(

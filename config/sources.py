@@ -31,6 +31,13 @@ SOURCES = {
             "beverage innovation coffee tea",
             "functional food nutrition health",
             "food ingredient innovation clean label",
+            # 六大优先品类定向搜索
+            "ready to drink beverage new launch 2025 2026",
+            "instant noodle frozen food innovation",
+            "prepared meal ready to cook food industry",
+            "bakery pastry cake new product launch",
+            "snack confectionery new product innovation",
+            "dairy milk yogurt cheese new product",
         ],
     },
     "google_news_cn": {

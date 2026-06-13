@@ -182,3 +182,40 @@ def classify_innovation(text: str, language: str = "zh") -> Tuple[int, str]:
                 break
 
     return (best_score, best_label)
+
+
+def detect_priority_category(text: str) -> Tuple[str, float]:
+    """
+    检测文本是否匹配六大优先品类
+
+    返回: (品类名, 加分值) — 未匹配返回 ("", 0)
+    """
+    from config.keywords import PRIORITY_CATEGORIES
+
+    text_lower = text.lower()
+    best_boost = 0.0
+    best_label = ""
+
+    for cat_key, cat_data in PRIORITY_CATEGORIES.items():
+        boost = cat_data["boost"]
+
+        # 中文关键词
+        for kw in cat_data["zh_keywords"]:
+            if kw.lower() in text_lower:
+                if boost > best_boost:
+                    best_boost = boost
+                    best_label = cat_data["label"]
+                break
+        else:
+            # 英文关键词
+            for kw in cat_data["en_keywords"]:
+                try:
+                    if re.search(kw, text_lower, re.IGNORECASE):
+                        if boost > best_boost:
+                            best_boost = boost
+                            best_label = cat_data["label"]
+                        break
+                except re.error:
+                    pass
+
+    return (best_label, best_boost)

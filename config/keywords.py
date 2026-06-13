@@ -246,6 +246,134 @@ ROUTINE_KEYWORDS = {
     ],
 }
 
+# ════════════════════════════════════════════════════════════
+# 优先品类关键词 — 六大核心赛道
+# 匹配到则获得额外评分加成
+# ════════════════════════════════════════════════════════════
+
+PRIORITY_CATEGORIES = {
+    "beverage": {
+        "label": "饮料",
+        "boost": 1.0,  # 额外加分
+        "zh_keywords": [
+            "饮料", "饮品", "气泡水", "碳酸饮料", "果汁", "茶饮",
+            "奶茶", "咖啡", "即饮", "RTD", "功能饮料", "能量饮料",
+            "植物奶", "燕麦奶", "椰奶", "豆奶", "杏仁奶",
+            "冷萃", "冷泡", "现制茶饮", "新茶饮", "瓶装水",
+            "矿泉水", "苏打水", "电解质", "运动饮料", "乳酸菌饮料",
+            "冰茶", "凉茶", "即饮咖啡", "即饮茶",
+            "可口可乐", "百事", "农夫山泉", "元气森林", "喜茶",
+            "瑞幸", "蜜雪冰城", "星巴克", "东方树叶", "三得利",
+            "红牛", "魔爪", "燃茶", "外星人", "王老吉",
+        ],
+        "en_keywords": [
+            "beverage", "drink", "sparkling water", "soda",
+            "juice", "tea", "coffee", "ready-to-drink", "RTD",
+            "energy drink", "functional drink", "plant milk",
+            "oat milk", "almond milk", "coconut milk",
+            "cold brew", "bubble tea", "soft drink",
+            "electrolyte", "sports drink", "bottled water",
+            "Starbucks", "Coca-Cola", "PepsiCo", "Monster",
+            "Red Bull", "Suntory", "Lipton",
+        ],
+    },
+    "instant_food": {
+        "label": "速食",
+        "boost": 1.0,
+        "zh_keywords": [
+            "速食", "方便食品", "方便面", "方便米饭", "方便粉",
+            "自热", "即食", "冲泡", "速冻", "微波炉", "冷冻食品",
+            "料理包", "速食粥", "速食汤", "拉面", "螺蛳粉",
+            "酸辣粉", "拌面", "杯面", "碗面", "冻干",
+            "康师傅", "统一", "今麦郎", "自嗨锅", "拉面说",
+        ],
+        "en_keywords": [
+            "instant food", "instant noodle", "ramen",
+            "ready meal", "instant rice", "frozen food",
+            "microwave meal", "freeze-dried", "cup noodle",
+            "convenience food", "instant soup", "self-heating",
+        ],
+    },
+    "prepared_meals": {
+        "label": "预制菜",
+        "boost": 1.0,
+        "zh_keywords": [
+            "预制菜", "半成品菜", "即烹", "即热", "即配",
+            "净菜", "中央厨房", "调理食品", "快手菜", "预制食品",
+            "到家", "美团", "叮咚", "盒马", "山姆",
+        ],
+        "en_keywords": [
+            "prepared meal", "meal kit", "ready-to-cook",
+            "ready-to-heat", "pre-cooked", "semi-prepared",
+            "central kitchen", "heat-and-eat", "cook-at-home",
+            "delivery meal kit", "pre-made meal",
+        ],
+    },
+    "dairy": {
+        "label": "乳品",
+        "boost": 1.0,
+        "zh_keywords": [
+            "乳品", "乳制品", "牛奶", "酸奶", "奶酪", "黄油",
+            "奶油", "奶粉", "炼乳", "冰淇淋", "雪糕", "奶盖",
+            "常温奶", "鲜奶", "低温奶", "巴氏奶", "A2",
+            "高蛋白奶", "零乳糖", "乳饮料", "含乳",
+            "蒙牛", "伊利", "光明", "君乐宝", "认养一头牛",
+            "简爱", "乐纯", "妙可蓝多", "百吉福", "安佳",
+        ],
+        "en_keywords": [
+            "dairy", "milk", "yogurt", "cheese", "butter",
+            "cream", "ice cream", "whey", "lactose",
+            "A2 milk", "protein milk", "fresh milk",
+            "UHT milk", "skim milk", "whole milk",
+            "Danone", "Yili", "Mengniu", "Arla",
+            "Fonterra", "Lactalis", "Nestlé dairy",
+            "dairy alternative", "cheese innovation",
+        ],
+    },
+    "bakery": {
+        "label": "烘焙",
+        "boost": 1.0,
+        "zh_keywords": [
+            "烘焙", "面包", "蛋糕", "饼干", "糕点", "甜点",
+            "吐司", "欧包", "法棍", "可颂", "丹麦", "贝果",
+            "马卡龙", "蛋挞", "曲奇", "蛋卷", "威化",
+            "预烘焙", "冷冻面团", "现烤", "短保", "长保",
+            "桃李", "达利", "好丽友", "奥利奥", "宾堡",
+            "幸福西饼", "鲍师傅", "泸溪河", "冠生园",
+        ],
+        "en_keywords": [
+            "bakery", "bread", "cake", "cookie", "pastry",
+            "biscuit", "cracker", "toast", "baguette",
+            "croissant", "bagel", "donut", "muffin",
+            "sourdough", "gluten-free bakery", "artisan bread",
+            "frozen dough", "par-baked", "fresh baked",
+            "Oreo", "Mondelez", "Grupo Bimbo", "Yamazaki",
+        ],
+    },
+    "snacks": {
+        "label": "零食",
+        "boost": 1.0,
+        "zh_keywords": [
+            "零食", "休闲食品", "小吃", "膨化", "薯片", "坚果",
+            "果干", "蜜饯", "糖果", "巧克力", "肉干", "肉脯",
+            "豆干", "海苔", "爆米花", "虾条", "卤味",
+            "代餐", "蛋白棒", "能量棒", "每日坚果", "混合坚果",
+            "三只松鼠", "良品铺子", "来伊份", "百草味", "洽洽",
+            "卫龙", "盐津铺子", "劲仔", "玛氏", "亿滋",
+            "费列罗", "好时", "雀巢", "旺旺", "上好佳",
+        ],
+        "en_keywords": [
+            "snack", "snacking", "savory snack", "chips",
+            "crisps", "nuts snack", "dried fruit", "jerky",
+            "chocolate", "candy", "confectionery", "popcorn",
+            "protein bar", "granola bar", "trail mix",
+            "seaweed snack", "puffed snack", "biscuit",
+            "Mars Wrigley", "Mondelez", "Hershey", "Ferrero",
+            "PepsiCo snacks", "Kellogg snack",
+        ],
+    },
+}
+
 # ── jieba 自定义词典词条 ──
 # 确保食品行业专有名词不被错误切分
 JIEBA_CUSTOM_WORDS = []
