@@ -95,6 +95,13 @@ def process_pipeline(raw_items: list[RawNewsItem]) -> tuple:
     items = dedup_in_batch(items)
     logger.info(f"Step 2 批内去重后: {len(items)} 条")
 
+    # Step 2.5: 食品相关性门禁（非食品内容直接丢掉）
+    from processor.nlp_utils import is_food_related
+    before = len(items)
+    items = [it for it in items if is_food_related(it.title + " " + it.summary)]
+    if before > len(items):
+        logger.info(f"Step 2.5 食品门禁过滤: {before - len(items)} 条非食品内容")
+
     # Step 3: 多因子评分 + 排序
     scored = rank_items(items)
     logger.info(f"Step 3 评分完成: {len(scored)} 条")

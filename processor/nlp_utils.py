@@ -184,6 +184,46 @@ def classify_innovation(text: str, language: str = "zh") -> Tuple[int, str]:
     return (best_score, best_label)
 
 
+# ── 食品相关性门禁 ──────────────────────────
+# 文本中必须包含至少一个关键词，否则判定为非食品内容，直接丢弃
+FOOD_GATE_KEYWORDS = [
+    # 中文 — 基础
+    "食品", "饮料", "饮品", "零食", "餐饮", "食材", "配料",
+    "乳品", "乳制品", "烘焙", "面包", "蛋糕", "糖果", "巧克力",
+    # 中文 — 品类
+    "茶饮", "咖啡", "奶茶", "气泡水", "预制菜", "速食", "方便面",
+    "自热", "冷冻食品", "速冻", "奶酪", "酸奶", "牛奶", "鲜奶",
+    "冰淇淋", "饼干", "坚果", "薯片", "肉干", "卤味",
+    # 中文 — 行业
+    "食品行业", "食品产业", "食业", "快消", "FMCG", "新消费",
+    "酒", "啤酒", "白酒", "葡萄酒", "调味品", "食用油",
+    "肉制品", "水产", "农产品", "饮料行业", "乳业", "糖酒",
+    # 英文 — 基础
+    "food", "beverage", "drink", "snack", "dairy", "bakery",
+    "grocery", "confectionery", "brew", "brewery", "distill",
+    # 英文 — 品类
+    "coffee", "tea", "soda", "juice", "water", "wine", "beer",
+    "spirit", "milk", "cheese", "yogurt", "butter", "cream",
+    "bread", "cake", "pastry", "cookie", "cracker", "biscuit",
+    "chocolate", "candy", "chips", "nut", "meat", "poultry",
+    "seafood", "plant-based", "protein", "ingredient",
+    # 英文 — 公司/品牌
+    "nestle", "pepsico", "coca-cola", "unilever", "danone",
+    "mondelez", "mars", "generalmills", "kraft", "heinz",
+    "tyson", "beyond meat", "oatly", "starbucks", "mcdonald",
+    "kfc", "burger king", "subway", "domino", "yili", "mengniu",
+]
+
+
+def is_food_related(text: str) -> bool:
+    """检查文本是否与食品饮料相关"""
+    text_lower = text.lower()
+    for kw in FOOD_GATE_KEYWORDS:
+        if kw.lower() in text_lower:
+            return True
+    return False
+
+
 def detect_priority_category(text: str) -> Tuple[str, float]:
     """
     检测文本是否匹配六大优先品类
