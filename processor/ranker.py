@@ -227,22 +227,42 @@ def split_top_items(
     en_items = [s for s in scored_items if s.language not in ("zh", "zh-CN")]
 
     def interleave(a, b, count_a, count_b):
-        """交叉排列两个列表"""
+        """交叉排列两个列表，不足时用另一个填充"""
         result = []
-        max_len = max(count_a, count_b)
-        for i in range(max_len):
-            if i < count_a and i < len(a):
-                result.append(a[i])
-            if i < count_b and i < len(b):
-                result.append(b[i])
-        return result
+        used_a = 0
+        used_b = 0
+        for i in range(max(count_a, count_b)):
+            if used_a < count_a and used_a < len(a):
+                result.append(a[used_a])
+                used_a += 1
+            if used_b < count_b and used_b < len(b):
+                result.append(b[used_b])
+                used_b += 1
+        return result, used_a, used_b
 
     # 最重要: 中文 Top 5 + 英文 Top 5
-    top_items = interleave(zh_items, en_items, 5, 5)
+    zh_cap = min(5, len(zh_items))
+    en_cap = min(5, len(en_items))
+    top_items, zh_used, en_used = interleave(zh_items, en_items, zh_cap, en_cap)
 
-    # 次重要: 中文 6~10 + 英文 6~10
-    zh_secondary = zh_items[5:10]
-    en_secondary = en_items[5:10]
-    secondary_items = interleave(zh_secondary, en_secondary, len(zh_secondary), len(en_secondary))
+    # 不够 5 条的一侧用另一侧补充
+    if zh_used < 5 and en_used < len(en_items):
+        fill = min(5 - zh_used, len(en_items) - en_used)
+        top_items.extend(en_items[en_used:en_used + fill])
+        en_used += fill
+    elif en_used < 5 and zh_used < len(zh_items):
+        fill = min(5 - en_used, len(zh_items) - zh_used)
+        top_items.extend(zh_items[zh_used:zh_used + fill])
+        zh_used += fill
 
-    return top_items, secondary_items
+    # 次重要: 剩余中文 + 剩余英文（各取5，不足对方补）
+    zh_secondary = zh_items[zh_used:zh_used + 5]
+    en_secondary = en_items[en_used:en_used + 5]
+    sec_items, _, _ = interleave(zh_secondary, en_secondary, len(zh_secondary), len(en_secondary))
+    # 不足填充
+    if len(sec_items) < 10:
+        remaining_all = zh_items[zh_used + 5:] + en_items[en_used + 5:]
+        remaining_all.sort(key=lambda x: x.total_score, reverse=True)
+        sec_items.extend(remaining_all[:10 - len(sec_items)])
+
+    return top_items, sec_items

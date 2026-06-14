@@ -265,6 +265,7 @@ SOURCES = {
         "language": "zh",
         "authority_level": "B",
         "authority_score": 8,
+        "enabled": False,  # 综合科技新闻，非食品专线，噪音大
     },
     "jiemian": {
         "type": "rss",
@@ -273,6 +274,7 @@ SOURCES = {
         "language": "zh",
         "authority_level": "B",
         "authority_score": 8,
+        "enabled": False,  # 综合新闻，非食品专线
     },
 
     # ══════════════════════════════════════════════════════════
