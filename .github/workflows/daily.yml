@@ -10,14 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore DB cache
-        uses: actions/cache@v4
-        with:
-          path: data/
-          key: food-news-db-${{ github.run_id }}
-          restore-keys: |
-            food-news-db-
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
